@@ -46,8 +46,18 @@ assign stall_rs =  (ALU1Sel != 2'b01) &  (
                   ((Rs == regWriteNum_IDEX) & regWriteEnable_IDEX) | 
                   ((Rs == regWriteNum_EXMEM) & regWriteEnable_EXMEM) | 
                   ((Rs == regWriteNum_MEMWB) & regWriteEnable_MEMWB) |
-                  ((Rs == regWriteNum) & regWriteEnable)); 
+                  ((Rs == regWriteNum) & regWriteEnable));
 
+    
+//assign stall_rs_ex = (ALU1Sel != 2'b01) &  (
+//                  ((Rs == regWriteNum_IDEX) & regWriteEnable_IDEX) | 
+//                  ((Rs == regWriteNum_EXMEM) & regWriteEnable_EXMEM) |
+//                  ((Rs == regWriteNum) & regWriteEnable));
+    
+//assign stall_rs_mem = (ALU1Sel != 2'b01) &  (
+//                  ((Rs == regWriteNum_IDEX) & regWriteEnable_IDEX) |  
+//                  ((Rs == regWriteNum_MEMWB) & regWriteEnable_MEMWB) |
+//                  ((Rs == regWriteNum) & regWriteEnable));
 
 assign stall_rd = (RtRead) & (
                   ((Rt == regWriteNum_IDEX) & regWriteEnable_IDEX) | 
@@ -55,6 +65,15 @@ assign stall_rd = (RtRead) & (
                   ((Rt == regWriteNum_MEMWB) & regWriteEnable_MEMWB) |
                   ((Rt == regWriteNum) & regWriteEnable));
 
+//assign stall_rd_ex = (RtRead) & (
+//                  ((Rt == regWriteNum_IDEX) & regWriteEnable_IDEX) | 
+//                  ((Rt == regWriteNum_EXMEM) & regWriteEnable_EXMEM) | 
+//                  ((Rt == regWriteNum) & regWriteEnable));
+    
+//assign stall_rd_mem = (RtRead) & (
+//                  ((Rt == regWriteNum_IDEX) & regWriteEnable_IDEX) | 
+//                  ((Rt == regWriteNum_MEMWB) & regWriteEnable_MEMWB) |
+//                  ((Rt == regWriteNum) & regWriteEnable));
 
 wire jump;
 assign jump = J | J_EX | J_EM | J_MW;
@@ -62,12 +81,10 @@ assign jump = J | J_EX | J_EM | J_MW;
 wire branch;
 assign branch = (PCCtr == 2'b01) | (PCCtr_EX == 2'b01) | (PCCtr_EM == 2'b01) | (PCCtr_MW == 2'b01);
 
-
 assign stall = stall_rs | stall_rd | jump | branch;
-// assign stall;
-
+    
+//stall can delate, output rs_ex, rs_mem, rd_ex, rd_mem
 
 assign branchStall = jump | branch;
 
-    
 endmodule
