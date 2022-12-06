@@ -5,12 +5,12 @@
    Description     : This module contains all components in the Memory stage of the 
                      processor.
 */
-module memory (//Input
+module memory (
                memWriteEnable, memReadEnable,
                siic, nop,clk, rst, halt,
                R2Data, ALUOut,
-               //Output
-               memoryOutData, memoryDone, memoryStall);
+               memoryOutData
+                  );
 
    // TODO: Your code here
 
@@ -23,27 +23,19 @@ module memory (//Input
    input[15:0]     ALUOut;
 
    output[15:0]    memoryOutData;
-   output          memoryDone, memoryStall;
 
 
    wire memEnable = memReadEnable | memWriteEnable;
 
-//   memory2c m(.data_out(memoryOutData), .data_in(R2Data), .addr(ALUOut), .enable(memEnable), .wr(memWriteEnable), .createdump(halt), .clk(clk), .rst(rst));
-
-   mem_system mem (//Output
-   		   .DataOut	(memoryOutData),
-   		   .Done	(memoryDone),
-   		   .Stall	(memoryStall),
-   		   .CacheHit	(),
-   		   .err		(),
-   		   //Input
-   		   .Addr	(ALUOut),
-   		   .DataIn	(R2Data),
-   		   .Rd		(memEnable),
-   		   .Wr		(memWriteEnable),
-   		   .createdump	(halt),
-   		   .clk		(clk),
-   		   .rst		(rst),
-   		   );
+   //read or write memory
+   memory2c m(.data_out(memoryOutData), .data_in(R2Data), .addr(ALUOut), .enable(memEnable), .wr(memWriteEnable), .createdump(halt), .clk(clk), .rst(rst));
+   // $display("test");
+   // always@(clk) begin
+   // if(memWriteEnable == 1'b1) begin
+   //    $display("memory address %h  memoryWriteData : %h.",ALUOut, R2Data);
+   //    $display("memoryOutData : %h, memReadEnable: %h, memWriteEnable: %h, halt: %h, clk: %h, rst: %h, memEnable: %h",
+   //          memoryOutData, memReadEnable, memWriteEnable, halt, clk, rst, memEnable);
+   // end
+   // end
 
 endmodule
