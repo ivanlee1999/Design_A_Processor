@@ -4,6 +4,6 @@ module mux2_1 (
 input A, B,S;
 output O;
 
-assign O = (~S & A) | (S & B);
+assign O = (~S &A) | (S & B);
 
 endmodule
