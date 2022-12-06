@@ -57,11 +57,16 @@ assign Rs8 = {R1Data[7:0], 8'h00};
 assign RsBTR = {R1Data[0], R1Data[1], R1Data[2], R1Data[3], R1Data[4], R1Data[5], R1Data[6], R1Data[7],
 	         R1Data[8], R1Data[9], R1Data[10], R1Data[11], R1Data[12], R1Data[13], R1Data[14], R1Data[15]};
 
+//Select ALU input1
 mux4_1  m1[15:0](.A(R1Data), .B(16'h0000), .C(Rs8), .D(RsBTR), .S(ALU1Sel[1:0]), .O(ALUIn1));
 
 //Select ALU input2
 mux4_1 m2[15:0](.A(R2Data), .B(I5), .C(16'h0000), .D(I8), .S(ALU2Sel[1:0]), .O(ALUIn2));
 
+//Select ALU input1,2 after forwarding
+//ALUIn1 = (stall_rs_ex) ?  ALUOut_EM : (stall_rs_mem) ? mempryOut_WB : ALUIn1;
+//ALUIn2 = (stall_rd_ex) ?  ALUOut_EM : (stall_rd_mem) ? mempryOut_WB : ALUIn2;
+	
 //ALU calculate
 //module alu (InA, InB, Cin, Oper, invA, invB, sign, Out, Zero, Ofl);
 alu alu1(.InA(ALUIn1), .InB(ALUIn2), .Cin(cin), .Oper(ALUOp), 
