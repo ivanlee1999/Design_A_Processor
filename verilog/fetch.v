@@ -36,7 +36,7 @@ module fetch (
 
    assign incr = stall ? 16'h0000 : 16'h0002;
 
-
+   //assign incr = branchStall ? 16'h0000 : 16'h0002;
 
    //module cla_16b(sum, c_out, a, b, c_in);
    dff_16b passPC(.q(newPC), .d(PC_temp), .clk(clk), .rst(rst));
