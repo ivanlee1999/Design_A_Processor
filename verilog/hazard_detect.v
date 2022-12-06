@@ -45,17 +45,15 @@ assign RtRead = (ALU2Sel == 2'b00) | (memWriteEnable == 1'b1);
 assign stall_rs =  (ALU1Sel != 2'b01) &  (
                   ((Rs == regWriteNum_IDEX) & regWriteEnable_IDEX) | 
                   ((Rs == regWriteNum_EXMEM) & regWriteEnable_EXMEM) | 
-                  ((Rs == regWriteNum_MEMWB) & regWriteEnable_MEMWB)
-                  |((Rs == regWriteNum) & regWriteEnable)
-                  ); 
+                  ((Rs == regWriteNum_MEMWB) & regWriteEnable_MEMWB) |
+                  ((Rs == regWriteNum) & regWriteEnable)); 
 
 
 assign stall_rd = (RtRead) & (
-                   ((Rt == regWriteNum_IDEX) & regWriteEnable_IDEX) | 
+                  ((Rt == regWriteNum_IDEX) & regWriteEnable_IDEX) | 
                   ((Rt == regWriteNum_EXMEM) & regWriteEnable_EXMEM) | 
-                  ((Rt == regWriteNum_MEMWB) & regWriteEnable_MEMWB) 
-                  | ((Rt == regWriteNum) & regWriteEnable)
-                  );
+                  ((Rt == regWriteNum_MEMWB) & regWriteEnable_MEMWB) |
+                  ((Rt == regWriteNum) & regWriteEnable));
 
 
 wire jump;
