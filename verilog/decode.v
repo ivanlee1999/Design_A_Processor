@@ -15,7 +15,8 @@ module decode (instr, clk, rst, WBData,
                PCCtr, J,siic, nop,
                compareSig, branchSig,
                regWriteNum_in, regWriteEN_in,
-               regWriteNum_out, regWriteEnable_out
+               regWriteNum_out, regWriteEnable_out,
+               r1Num, r2Num
                );
 
 input clk, rst;
@@ -43,6 +44,8 @@ output[1:0]    compareSig, branchSig;
 output[2:0]    regWriteNum_out; //check
 output         regWriteEnable_out; //check
 
+output [2:0]   r1Num, r2Num;
+
 wire[1:0]    regWriteRegSel;
 wire         signExtend;
 //wire[2:0]    regWriteNum;
@@ -63,6 +66,9 @@ control CtrSignal (
 // );
 mux4_1_3b m1(instr[7:5], instr[10:8], 3'b111, instr[4:2], regWriteRegSel, regWriteNum_out);
 
+assign r2Num = instr[7:5];
+assign r1Num = instr[10:8];
+
 
 
 // module regFile (
@@ -71,7 +77,7 @@ mux4_1_3b m1(instr[7:5], instr[10:8], 3'b111, instr[4:2], regWriteRegSel, regWri
 //                 // Inputs
 //                 clk, rst, read1RegSel, read2RegSel, writeRegSel, writeData, writeEn
 //                 );
-regFile regFile0(.read1Data(R1Data), .read2Data(R2Data), .err(err), .clk(clk), .rst(rst), 
+regFile_bypass regFile0(.read1Data(R1Data), .read2Data(R2Data), .err(err), .clk(clk), .rst(rst), 
             .read1RegSel(instr[10:8]), .read2RegSel(instr[7:5]), 
             .writeRegSel(regWriteNum_in), .writeData(WBData), .writeEn(regWriteEN_in));
 

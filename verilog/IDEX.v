@@ -33,7 +33,9 @@ module IDEX (
 	clk, rst,
 	newPC_in, newPC_out,
 	PC2_in, PC2_out,
-	regWriteEnable_in, regWriteEnable_out);
+	regWriteEnable_in, regWriteEnable_out,
+	r1Num_in, r2Num_in,
+	r1Num_out, r2Num_out);
 
 	input         clk, rst;
 	input         halt_in;
@@ -57,6 +59,8 @@ module IDEX (
 	input[15:0]    PC2_in;//check
 	input          regWriteEnable_in;
 
+	input[2:0]     r1Num_in, r2Num_in;
+
 	output         halt_out;
 	output         inv1_out, inv2_out, cin_out;
 	output[1:0]    ALU1Sel_out;
@@ -77,6 +81,10 @@ module IDEX (
 	output[15:0]   newPC_out;//check
 	output[15:0]   PC2_out;//check
 	output         regWriteEnable_out;
+
+
+	output[2:0]    r1Num_out, r2Num_out;
+
 
 	dff d0 (.q(), .d(), .clk(clk), .rst(rst));
 
@@ -106,5 +114,10 @@ module IDEX (
         dff_16b d23  (.q(newPC_out), .d(newPC_in), .clk(clk), .rst(rst));
         dff_16b d24  (.q(PC2_out), .d(PC2_in), .clk(clk), .rst(rst));
         dff d25 (.q(regWriteEnable_out), .d(regWriteEnable_in), .clk(clk), .rst(rst));
+
+
+
+	dff d26[2:0] (.q(r1Num_out), .d(r1Num), .clk(clk), .rst(rst));
+	dff d27[2:0] (.q(r2Num_out), .d(r2Num), .clk(clk), .rst(rst));	
         
 endmodule

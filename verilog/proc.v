@@ -105,6 +105,9 @@ module proc (/*AUTOARG*/
    wire [15:0] PCOut_End;
 
 
+   wire [2:0]   r1Num_EX, r2Num_EX;
+
+
    fetch fetch0(   
       .PCin(PCStall),
       .halt(halt_MW), //need change
@@ -171,22 +174,33 @@ module proc (/*AUTOARG*/
    //  $display("halt %d", halt);
    //end
 
-      hazard_detect hazard0 (
-      // .ALU1Sel(ALU1Sel),
-      // .ALU2Sel(ALU2Sel),
-      .instr(instr),
-      // .memWriteEnable(memWriteEnable),
-      .regWriteNum(regWriteNum),
-      .regWriteNum_IDEX(regWriteNum_EX),
+   wire hazard_stall;
+   hazard_stall hazardStall(
+         .instr(instr), 
+         .memWriteEnable_EX(memWriteEnable_EX), 
+         .memReadEnable_EX(memReadEnable_EX), 
+         .regWriteNum_EX(regWriteNum_EX), 
+         .hazard(hazard_stall)
+      );
+
+   wire[1:0] forward_a, forward_b;
+
+   hazard_forward hazard0 (
       .regWriteNum_EXMEM(regWriteNum_EM),
       .regWriteNum_MEMWB(regWriteNum_WB),
-      .regWriteEnable(RWEN),
-      .regWriteEnable_IDEX(RWEN_EX),
       .regWriteEnable_EXMEM(RWEN_EM),
       .regWriteEnable_MEMWB(RWEN_WB),
       .J(J), .J_EX(J_EX), .J_EM(J_EM), .J_MW(J_MW),
       .PCCtr(PCCtr), .PCCtr_EX(PCCtr_EX), .PCCtr_EM(PCCtr_EM), .PCCtr_MW(PCCtr_MW),
-      .stall(stall), .branchStall(branchStall));
+      .branchStall(branchStall),
+      .r1Num_EX(r1Num_EX), .r2Num_EX(r2Num_EX),
+      .ALU1Sel_EX(ALU1Sel_EX), .ALU2Sel_EX(ALU2Sel_EX),
+      .forward_a(forward_a), .forward_b(forward_b));
+
+
+   assign stall = hazard_stall | branchStall;
+
+
    
    wire stallNext;
    dff dffstall(stallNext, stall, clk, rst);
@@ -196,6 +210,9 @@ module proc (/*AUTOARG*/
    assign instrStall = (stallNext) ? 16'h0800 : instr_ID;
    // assign instrStall = instr_ID;
 
+
+
+   wire [2:0]   r1Num, r2Num;
    decode decode0(
       .instr(instrStall), .clk(clk), .rst(rst),
       .WBData(regWriteData),
@@ -210,7 +227,8 @@ module proc (/*AUTOARG*/
       .siic(siic), .nop(nop),
       .compareSig(compareSig), .branchSig(branchSig),
       .regWriteNum_in(regWriteNum_WB), .regWriteEN_in(RWEN_WB),
-      .regWriteNum_out(regWriteNum), .regWriteEnable_out(RWEN)
+      .regWriteNum_out(regWriteNum), .regWriteEnable_out(RWEN),
+      .r1Num(r1Num), .r2Num(r2Num)
       // .regWriteNum(regWriteSel)
       //  .regWriteSel(regWriteSel_WB),//check
       // .regWriteEN(RWEN_WB),//check     .regWriteEnable(RWEN)           
@@ -249,13 +267,30 @@ module proc (/*AUTOARG*/
       .clk(clk), .rst(rst),
       .newPC_in(newPC_ID), .newPC_out(newPC_EX),
       .PC2_in(PC2_ID), .PC2_out(PC2_EX),
-      .regWriteEnable_in(RWEN), .regWriteEnable_out(RWEN_EX));
+      .regWriteEnable_in(RWEN), .regWriteEnable_out(RWEN_EX),
+      .r1Num_in(r1Num), .r1Num_out(r1Num_EX),
+      .r2Num_in(r2Num), .r2Num_out(r2Num_EX));
+
+
+
+
+
+      
+   wire [15:0] forwardR1Data, forwardR2Data;
+   forward_alu fa(
+      .forward_a(forward_a), .forward_b(forward_b), 
+      .originalR1Data(R1Data_EX), .originalR2Data(R2Data_EX),
+      .ALUOut_EM(ALUOut_EM), .regWriteData(regWriteData),
+      .forwardR1Data(forwardR1Data), .forwardR2Data(forwardR2Data)
+   );
+
+
 
 
 
 
    execute executeModule(
-      .R1Data(R1Data_EX), .R2Data(R2Data_EX), 
+      .R1Data(forwardR1Data), .R2Data(forwardR2Data), 
       .I5(I5_EX), .I8(I8_EX), .D(D_EX), 
       .halt(halt_EX), 
       .inv1(inv1_EX), .inv2(inv2_EX), .cin(cin_EX), 
