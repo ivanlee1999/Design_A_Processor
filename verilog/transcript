@@ -1,5 +1,5 @@
 # vsim -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 21:27:18 on Dec 06,2022
+# Start time: 10:45:49 on Dec 08,2022
 # //  ModelSim DE 10.7c Aug 17 2018Linux 5.15.0-56-generic
 # //
 # //  Copyright 1991-2018 Mentor Graphics Corporation
@@ -29,13 +29,13 @@
 # Loading __work.IFID
 # Loading __work.hazard_stall
 # Loading __work.hazard_forward
+# Loading __work.forward_alu
 # Loading __work.decode
 # Loading __work.control
 # Loading __work.mux4_1_3b
 # Loading __work.mux4_1
 # Loading __work.regFile_bypass
 # Loading __work.IDEX
-# Loading __work.forward_alu
 # Loading __work.execute
 # Loading __work.alu
 # Loading __work.inverse
@@ -47,16 +47,13 @@
 # Loading __work.memory
 # Loading __work.MEMWB
 # Loading __work.wb
-# ** Warning: (vsim-2685) [TFMPC] - Too few port connections for 'fa'.  Expected 9, found 8.
-#    Time: 0 ns  Iteration: 0  Instance: /proc_hier_pbench/DUT/p0/fa File: proc.v Line: 280
+# Loading __work.bypass
 # log -howmany -rec /* 
-# 7300
+# 7593
 #  run -all
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.ptrace for output
-# hmm....more than 100000 cycles of simulation...error?
-# 
-# ** Note: $finish    : clkrst.v(41)
-#    Time: 10 ms  Iteration: 1  Instance: /proc_hier_pbench/DUT/c0
-# End time: 21:27:25 on Dec 06,2022, Elapsed time: 0:00:07
-# Errors: 0, Warnings: 1
+# ** Note: $finish    : proc_hier_pbench.v(115)
+#    Time: 1205 ns  Iteration: 0  Instance: /proc_hier_pbench
+# End time: 10:45:49 on Dec 08,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0

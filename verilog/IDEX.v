@@ -117,7 +117,7 @@ module IDEX (
 
 
 
-	dff d26[2:0] (.q(r1Num_out), .d(r1Num), .clk(clk), .rst(rst));
-	dff d27[2:0] (.q(r2Num_out), .d(r2Num), .clk(clk), .rst(rst));	
+	dff d26[2:0] (.q(r1Num_out), .d(r1Num_in), .clk(clk), .rst(rst));
+	dff d27[2:0] (.q(r2Num_out), .d(r2Num_in), .clk(clk), .rst(rst));	
         
 endmodule

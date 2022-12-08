@@ -124,35 +124,39 @@ module proc (/*AUTOARG*/
       );
 
 
-   //always@(negedge clk) begin
-    //   $display("A: %b, Op: %b, Inv: %b", 
-    //   A, Op, Inv);
-    //$display("instr : %b", instr);
-    //$display("instr id : %b", instr_ID);
-    //$display("instr stall : %b", instrStall);
-    //$display("regwriteNum : %h", regWriteNum);
-    //$display("regwriteNumEX : %h", regWriteNum_EX);
-    //$display("regwriteNumEM : %h", regWriteNum_EM);
-    //$display("regwriteNumWB : %h", regWriteNum_WB);
-    //$display("stall: %h", stall);
-    //$display("branchStall: %h", branchStall);
-    //$display("branch : %h", PCCtr);
-    //$display("branchEX : %h", PCCtr_EX);
-    //$display("branchEM : %h", PCCtr_EM);
-    //$display("branchWB : %h", PCCtr_MW); 
-    //$display("fetch0 : newPC: %d, PC2: %d", newPC, PC2);
-    //$display("PCStall: %d", PCStall);
-    //$display("PCOut : %d", PCOut); 
-    //$display("D : %b", D_EX); 
-    //$display("halt : %b", halt_MW); 
-   //  $display("PC_temp : %d", fetch0.PC_temp); 
-   //  $display("R2Data : %h", R2Data_EM);
+   // always@(negedge clk) begin
+   //    // $display("A: %b, Op: %b, Inv: %b", 
+   //    // A, Op, Inv);
+   //  $display("instr : %b", instr);
+   //  $display("instr id : %b", instr_ID);
+   //  $display("instr stall : %b", instrStall);
+   //  $display("stall: %h", stall);
+   // //  $display("branchStall: %h", branchStall);
+   // //  $display("branch : %h", PCCtr);
+   // //  $display("branchEX : %h", PCCtr_EX);
+   // //  $display("branchEM : %h", PCCtr_EM);
+   // //  $display("branchWB : %h", PCCtr_MW); 
+   // //  $display("fetch0 : newPC: %d, PC2: %d", newPC, PC2);
+   // //  $display("PCStall: %d", PCStall);
+   // //  $display("PCOut : %d", PCOut); 
+   // //  $display("D : %b", D_EX); 
+   // //  $display("halt : %b", halt_MW); 
+   // //  $display("PC_temp : %d", fetch0.PC_temp); 
+   // //  $display("R2Data : %h", R2Data_EM);
+   //  $display("regwriteNum: ID : %h,  EX : %h, EM : %h, WB : %h", regWriteNum, regWriteNum_EX, regWriteNum_EM, regWriteNum_WB);
+   //  $display("R1Num_EX : %h, R2Num_EX : %h", r1Num_EX, r2Num_EX);
    //  $display("memWriteEnable_EM: %h", memWriteEnable_EM);
+   //  $display("forward signal 1 : %b", forward_a);
+   //  $display("forward signal 2 : %b", forward_b);
+   //  $display("original data 1 : %b", R1Data_EX);
+   //  $display("original data 2 : %b", R2Data_EX);
+   //  $display("forward data 1 : %b", forwardR1Data);
+   //  $display("forward data 2 : %b", forwardR2Data);
     
     
 
-    //$display("");
-   //end
+   //  $display("");
+   // end
       
    IFID ifid0(
       .instrct_in(instr),
@@ -199,6 +203,15 @@ module proc (/*AUTOARG*/
 
 
    assign stall = hazard_stall | branchStall;
+
+
+   wire [15:0] forwardR1Data, forwardR2Data;
+   forward_alu fa(
+      .forward_a(forward_a), .forward_b(forward_b), 
+      .originalR1Data(R1Data_EX), .originalR2Data(R2Data_EX),
+      .ALUOut_EM(ALUOut_EM), .regWriteData(regWriteData),
+      .forwardR1Data(forwardR1Data), .forwardR2Data(forwardR2Data)
+   );
 
 
    
@@ -276,13 +289,7 @@ module proc (/*AUTOARG*/
 
 
       
-   wire [15:0] forwardR1Data, forwardR2Data;
-   forward_alu fa(
-      .forward_a(forward_a), .forward_b(forward_b), 
-      .originalR1Data(R1Data_EX), .originalR2Data(R2Data_EX),
-      .ALUOut_EM(ALUOut_EM), .regWriteData(regWriteData),
-      .forwardR1Data(forwardR1Data), .forwardR2Data(forwardR2Data)
-   );
+
 
 
 
