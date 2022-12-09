@@ -27,13 +27,13 @@ output [1:0] forward_a, forward_b;
 
 
 assign forward_a =   
-                ((r1Num_EX == regWriteNum_EXMEM) & regWriteEnable_EXMEM & (ALU1Sel_EX != 2'b01)) ? 2'b10 : 
-                ((r1Num_EX == regWriteNum_MEMWB) & regWriteEnable_MEMWB & (ALU1Sel_EX != 2'b01)) ? 2'b01 :
+                ((r1Num_EX == regWriteNum_EXMEM) & regWriteEnable_EXMEM  ) ? 2'b10 : 
+                ((r1Num_EX == regWriteNum_MEMWB) & regWriteEnable_MEMWB  ) ? 2'b01 :
                 2'b00;
 
 assign forward_b = 
-                ((r2Num_EX == regWriteNum_EXMEM) & regWriteEnable_EXMEM & (ALU2Sel_EX == 2'b00)) ? 2'b10 : 
-                ((r2Num_EX == regWriteNum_MEMWB) & regWriteEnable_MEMWB & (ALU2Sel_EX == 2'b00)) ? 2'b01 :
+                ((r2Num_EX == regWriteNum_EXMEM) & regWriteEnable_EXMEM  ) ? 2'b10 : 
+                ((r2Num_EX == regWriteNum_MEMWB) & regWriteEnable_MEMWB  ) ? 2'b01 :
                 2'b00;
 
 

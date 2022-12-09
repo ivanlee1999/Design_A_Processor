@@ -120,7 +120,7 @@ always @(*) begin
             regWriteRegSel = 2'b00;      //[7:5] d
             regwriteDataSel = 2'b00;     //from ALU Out
         end
-        5'b10000:begin                  //ST
+        5'b10000:begin                  //ST  ALU calculate(RS + I)
             ALUOp = 3'b100;
             signExtend = 1'b1;
             memWriteEnable = 1'b1;
@@ -217,7 +217,7 @@ always @(*) begin
             cin = 1'b1;
             compareSig = 2'b01;
         end
-        5'b11110:begin                    //SLE
+        5'b11110:begin                    //SLE      -r1+rt2
             ALUOp = 3'b100;
             ALU2Sel = 2'b00;           //R2
             regWriteEnable = 1'b1;

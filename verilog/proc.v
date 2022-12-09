@@ -131,7 +131,7 @@ module proc (/*AUTOARG*/
    //  $display("instr id : %b", instr_ID);
    //  $display("instr stall : %b", instrStall);
    //  $display("stall: %h", stall);
-   // //  $display("branchStall: %h", branchStall);
+   //  $display("branchStall: %h", branchStall);
    // //  $display("branch : %h", PCCtr);
    // //  $display("branchEX : %h", PCCtr_EX);
    // //  $display("branchEM : %h", PCCtr_EM);
@@ -152,7 +152,10 @@ module proc (/*AUTOARG*/
    //  $display("original data 2 : %b", R2Data_EX);
    //  $display("forward data 1 : %b", forwardR1Data);
    //  $display("forward data 2 : %b", forwardR2Data);
-    
+   //  $display("jump: %b, branch: %b", hazard0.jump, hazard0.branch);
+   //  $display("ALUOut_EX: %b, AluOut_EM: %b, ALUout_MW: %b", ALUOut, ALUOut_EM, ALUOut_WB);
+   //   $display("regWriteDataSel_EM: %b,  regWriteDataSel_MW: %b", regWriteDataSel_EM, regWriteDataSel_WB);
+   //  $display("PCCTR: %b, PCCtr_EX: %b, PCCtr_EM: %b, PCCtr_MW: %b", PCCtr, PCCtr_EX, PCCtr_EM, PCCtr_MW);
     
 
    //  $display("");
@@ -181,9 +184,9 @@ module proc (/*AUTOARG*/
    wire hazard_stall;
    hazard_stall hazardStall(
          .instr(instr), 
-         .memWriteEnable_EX(memWriteEnable_EX), 
-         .memReadEnable_EX(memReadEnable_EX), 
-         .regWriteNum_EX(regWriteNum_EX), 
+         .memWriteEnable_EX(memWriteEnable), 
+         .memReadEnable_EX(memReadEnable), 
+         .regWriteNum_EX(regWriteNum), 
          .hazard(hazard_stall)
       );
 
@@ -209,7 +212,11 @@ module proc (/*AUTOARG*/
    forward_alu fa(
       .forward_a(forward_a), .forward_b(forward_b), 
       .originalR1Data(R1Data_EX), .originalR2Data(R2Data_EX),
-      .ALUOut_EM(ALUOut_EM), .regWriteData(regWriteData),
+      .ALUOut_EM(ALUOut_EM), .ALUOut_MW(ALUOut_WB),
+      .memoryOut(memoryOut), .memoryOut_WB(memoryOut_WB),
+      .PC2_EM(PC2_EM), .PC2_WB(PC2_WB),
+      .compareResult_EM(compareResult_EM), .compareResult_WB(compareResult_WB),
+      .regWriteDataSel_EM(regWriteDataSel_EM), .regWriteDataSel_WB(regWriteDataSel_WB),
       .forwardR1Data(forwardR1Data), .forwardR2Data(forwardR2Data)
    );
 
@@ -328,7 +335,7 @@ module proc (/*AUTOARG*/
       .memWriteEnable(memWriteEnable_EX),
       .memReadEnable(memReadEnable_EX),
       .clk(clk), .rst(rst), .halt(halt_EX),
-      .R2Data(R2Data_EX),
+      .R2Data(forwardR2Data),                                //r2 data should be from forwarding
       .siic(siic_EX), .nop(nop_EX),
       .regWriteNum(regWriteNum_EX),
       .regWriteEnable_in(RWEN_EX),
