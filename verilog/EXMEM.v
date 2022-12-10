@@ -4,7 +4,7 @@ module EXMEM (//input
               //output
               ALUOut_EM, compareResult_EM, PC2_EM, regWriteDataSel_EM,
               memWriteEnable_EM, memReadEnable_EM, halt_EM,
-              R2Data_EM, siic_EM, nop_EM,regWriteNum_EM, regWriteEnable_out, PCOut_EM, PCCtr_EM, J_EM);
+              R2Data_EM, siic_EM, nop_EM,regWriteNum_EM, regWriteEnable_out, PCOut_EM, PCCtr_EM, J_EM, en);
    
    input [15:0]         ALUOut;
    input         compareResult;
@@ -20,6 +20,7 @@ module EXMEM (//input
    input [15:0] PCOut;
    input [1:0] PCCtr;
    input J;
+   input en;
    
    //input        regWriteENable;
    //input [1:0]  regwriteRegSel;
@@ -46,21 +47,21 @@ module EXMEM (//input
    output [1:0]   PCCtr_EM;
    output J_EM;
    
-   dff_16b ALUOutdff    (ALUOut_EM, ALUOut, clk, rst);
-   dff compareResultdff (compareResult_EM, compareResult, clk, rst);
-   dff_16b PC2dff       (PC2_EM, PC2, clk, rst);
-   dff regWDSeldff [1:0] (.q(regWriteDataSel_EM), .d(regWriteDataSel), 
+   dffr ALUOutdff[15:0]    (ALUOut_EM, ALUOut, en, clk, rst);
+   dffr compareResultdff (compareResult_EM, compareResult, en, clk, rst);
+   dffr PC2dff  [15:0]  (PC2_EM, PC2,en, clk, rst);
+   dffr regWDSeldff [1:0] (.q(regWriteDataSel_EM), .d(regWriteDataSel), .en(en),
    		      .clk(clk), .rst(rst));
-   dff memWriteEnabledff (memWriteEnable_EM, memWriteEnable, clk, rst);
-   dff memReadEnabledff (memReadEnable_EM, memReadEnable, clk, rst);
-   dff haltdff (halt_EM, halt, clk, rst);
-   dff_16b R2Datadff (R2Data_EM, R2Data, clk, rst);
-   dff siicdff (siic_EM, siic, clk, rst);
-   dff nopdff (nop_EM, nop, clk, rst);
-   dff regWritedff [2:0] (regWriteNum_EM, regWriteNum, clk, rst);
-   dff regWriteEnabledff (regWriteEnable_out, regWriteEnable_in, clk, rst);
-   dff passPCOutdff [15:0] (PCOut_EM, PCOut, clk, rst);
-   dff passPCCtrdff [1:0] (PCCtr_EM, PCCtr, clk, rst);
-   dff Jdff (J_EM, J, clk, rst);
+   dffr memWriteEnabledff (memWriteEnable_EM, memWriteEnable,en, clk, rst);
+   dffr memReadEnabledff (memReadEnable_EM, memReadEnable, en,clk, rst);
+   dffr haltdff (halt_EM, halt, en,clk, rst);
+   dffr R2Datadff [15:0] (R2Data_EM, R2Data, en,clk, rst);
+   dffr siicdff (siic_EM, siic, en,clk, rst);
+   dffr nopdff (nop_EM, nop,en, clk, rst);
+   dffr regWritedff [2:0] (regWriteNum_EM, regWriteNum, en,clk, rst);
+   dffr regWriteEnabledff (regWriteEnable_out, (regWriteEnable_in), en,clk, rst);
+   dffr passPCOutdff [15:0] (PCOut_EM, PCOut, en,clk, rst);
+   dffr passPCCtrdff [1:0] (PCCtr_EM, PCCtr, en,clk, rst);
+   dffr Jdff (J_EM, J, en,clk, rst);
    	      
 endmodule	      

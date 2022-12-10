@@ -9,7 +9,8 @@ module memory (
                memWriteEnable, memReadEnable,
                siic, nop,clk, rst, halt,
                R2Data, ALUOut,
-               memoryOutData
+               memoryOutData,
+               dataMemStall
                   );
 
    // TODO: Your code here
@@ -23,12 +24,24 @@ module memory (
    input[15:0]     ALUOut;
 
    output[15:0]    memoryOutData;
+   output dataMemStall;
 
 
    wire memEnable = memReadEnable | memWriteEnable;
 
    //read or write memory
-   memory2c m(.data_out(memoryOutData), .data_in(R2Data), .addr(ALUOut), .enable(memEnable), .wr(memWriteEnable), .createdump(halt), .clk(clk), .rst(rst));
+   // memory2c m(.data_out(memoryOutData), .data_in(R2Data), .addr(ALUOut), .enable(memEnable), .wr(memWriteEnable), .createdump(halt), .clk(clk), .rst(rst));
+
+
+    stallmem mem(.DataOut(memoryOutData), .DataIn(R2Data), .Addr(ALUOut), .Rd(memReadEnable), .Wr(memWriteEnable), .createdump(halt), 
+        .clk(clk), .rst(rst), .err(), .Done(), .Stall(dataMemStall), .CacheHit());
+
+
+
+
+
+
+
    // $display("test");
    // always@(clk) begin
    // if(memWriteEnable == 1'b1) begin

@@ -108,6 +108,7 @@ module proc (/*AUTOARG*/
    wire [2:0]   r1Num_EX, r2Num_EX;
 
    wire instrMemStall;
+   wire dataMemStall;
 
 
    fetch fetch0(   
@@ -172,7 +173,8 @@ module proc (/*AUTOARG*/
       .PC2_in(PC2),
       .PC2_out(PC2_ID),
       .clk(clk),
-      .rst(rst));
+      .rst(rst),
+      .en(~dataMemStall));
 
 
   //always@(negedge clk) begin
@@ -208,7 +210,7 @@ module proc (/*AUTOARG*/
       .forward_a(forward_a), .forward_b(forward_b));
 
 
-   assign stall = hazard_stall | branchStall |instrMemStall;
+   assign stall = hazard_stall | branchStall |instrMemStall | dataMemStall;
 
 
    wire [15:0] forwardR1Data, forwardR2Data;
@@ -292,7 +294,8 @@ module proc (/*AUTOARG*/
       .PC2_in(PC2_ID), .PC2_out(PC2_EX),
       .regWriteEnable_in(RWEN), .regWriteEnable_out(RWEN_EX),
       .r1Num_in(r1Num), .r1Num_out(r1Num_EX),
-      .r2Num_in(r2Num), .r2Num_out(r2Num_EX));
+      .r2Num_in(r2Num), .r2Num_out(r2Num_EX),
+      .en(~dataMemStall));
 
 
 
@@ -345,6 +348,7 @@ module proc (/*AUTOARG*/
       .PCOut(PCOut),
       .PCCtr(PCCtr_EX),
       .J(J_EX),
+      .en(~dataMemStall),
       //output
       .ALUOut_EM(ALUOut_EM),
       .compareResult_EM(compareResult_EM),
@@ -366,7 +370,8 @@ module proc (/*AUTOARG*/
       .memWriteEnable(memWriteEnable_EM), .memReadEnable(memReadEnable_EM),
       .siic(siic_EM), .nop(nop_EM), .clk(clk), .rst(rst), .halt(halt_EM), 
       .R2Data(R2Data_EM), .ALUOut(ALUOut_EM),
-      .memoryOutData(memoryOut)
+      .memoryOutData(memoryOut),
+      .dataMemStall(dataMemStall)
    );
 
    MEMWB memwb0 (
@@ -383,6 +388,8 @@ module proc (/*AUTOARG*/
       .PCOut(PCOut_EM),
       .PCCtr(PCCtr_EM),
       .J(J_EM),
+      .en(1'b1),
+      .dataMemStall(dataMemStall),
       //output
       .memoryOut_MW(memoryOut_WB),
       .ALUOut_MW(ALUOut_WB),

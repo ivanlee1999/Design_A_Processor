@@ -58,8 +58,8 @@ module fetch (
    wire [15:0] instrct2, test;
    assign test = 16'd24;
    
-   memory2c fetchInstruct2(.data_out(instrct2), .data_in(16'h0000), 
-                        .addr(test), .enable(1'b1), .wr(1'b0), .createdump(1'b0), .clk(clk), .rst(rst) );
+   // memory2c fetchInstruct2(.data_out(instrct2), .data_in(16'h0000), 
+   //                      .addr(test), .enable(1'b1), .wr(1'b0), .createdump(1'b0), .clk(clk), .rst(rst) );
 
 
    // always@(negedge clk) begin

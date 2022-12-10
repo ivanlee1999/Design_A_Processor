@@ -35,7 +35,8 @@ module IDEX (
 	PC2_in, PC2_out,
 	regWriteEnable_in, regWriteEnable_out,
 	r1Num_in, r2Num_in,
-	r1Num_out, r2Num_out);
+	r1Num_out, r2Num_out,
+	en);
 
 	input         clk, rst;
 	input         halt_in;
@@ -60,6 +61,7 @@ module IDEX (
 	input          regWriteEnable_in;
 
 	input[2:0]     r1Num_in, r2Num_in;
+	input			en;
 
 	output         halt_out;
 	output         inv1_out, inv2_out, cin_out;
@@ -86,38 +88,37 @@ module IDEX (
 	output[2:0]    r1Num_out, r2Num_out;
 
 
-	dff d0 (.q(), .d(), .clk(clk), .rst(rst));
+	// dff d0 (.q(), .d(), .clk(clk), .rst(rst));
 
-	dff d1(.q(halt_out), .d(halt_in), .clk(clk), .rst(rst));
-	dff d2(.q(inv1_out), .d(inv1_in), .clk(clk), .rst(rst));
-	dff d3(.q(inv2_out), .d(inv2_in), .clk(clk), .rst(rst));
-	dff d4(.q(cin_out), .d(cin_in), .clk(clk), .rst(rst));
-	dff d5[1:0] (.q(ALU1Sel_out), .d(ALU1Sel_in), .clk(clk), .rst(rst));
-	dff d6[1:0] (.q(ALU2Sel_out), .d(ALU2Sel_in), .clk(clk), .rst(rst));
-	dff d7[2:0] (.q(ALUOp_out), .d(ALUOp_in), .clk(clk), .rst(rst));
-	dff d8(.q(memWriteEnable_out), .d(memWriteEnable_in), .clk(clk), .rst(rst));
-	dff d9(.q(memReadEnable_out), .d(memReadEnable_in), .clk(clk), .rst(rst));
-	dff d10[1:0] (.q(PCCtr_out), .d(PCCtr_in), .clk(clk), .rst(rst));
-	dff d11 (.q(J_out), .d(J_in), .clk(clk), .rst(rst));
-	dff d12 (.q(siic_out), .d(siic_in), .clk(clk), .rst(rst));
-	dff d13 (.q(nop_out), .d(nop_in), .clk(clk), .rst(rst));
-	dff d14[15:0] (.q(I5_out), .d(I5_in), .clk(clk), .rst(rst));
-	dff d15[15:0] (.q(I8_out), .d(I8_in), .clk(clk), .rst(rst));
-	dff d16[15:0] (.q(D_out), .d(D_in), .clk(clk), .rst(rst));
-	dff d17[15:0] (.q(R1Data_out), .d(R1Data_in), .clk(clk), .rst(rst));
-	dff d18[15:0] (.q(R2Data_out), .d(R2Data_in), .clk(clk), .rst(rst));
-	dff d19[1:0] (.q(regWriteDataSel_out), .d(regWriteDataSel_in), .clk(clk), 
-	.rst(rst));
-	dff d20[1:0] (.q(compareSig_out), .d(compareSig_in), .clk(clk), .rst(rst));
-	dff d21[1:0] (.q(branchSig_out), .d(branchSig_in), .clk(clk), .rst(rst));
-	dff d22[2:0] (.q(regWriteNum_out), .d(regWriteNum_in), .clk(clk), .rst(rst));
-        dff_16b d23  (.q(newPC_out), .d(newPC_in), .clk(clk), .rst(rst));
-        dff_16b d24  (.q(PC2_out), .d(PC2_in), .clk(clk), .rst(rst));
-        dff d25 (.q(regWriteEnable_out), .d(regWriteEnable_in), .clk(clk), .rst(rst));
-
+	dffr d1(.q(halt_out), .d(halt_in), .clk(clk), .rst(rst), .en(en));
+	dffr d2(.q(inv1_out), .d(inv1_in), .clk(clk), .rst(rst), .en(en));
+	dffr d3(.q(inv2_out), .d(inv2_in), .clk(clk), .rst(rst), .en(en));
+	dffr d4(.q(cin_out), .d(cin_in), .clk(clk), .rst(rst), .en(en));
+	dffr d5[1:0] (.q(ALU1Sel_out), .d(ALU1Sel_in), .clk(clk), .rst(rst), .en(en));
+	dffr d6[1:0] (.q(ALU2Sel_out), .d(ALU2Sel_in), .clk(clk), .rst(rst), .en(en));
+	dffr d7[2:0] (.q(ALUOp_out), .d(ALUOp_in), .clk(clk), .rst(rst), .en(en));
+	dffr d8(.q(memWriteEnable_out), .d(memWriteEnable_in), .clk(clk), .rst(rst), .en(en));
+	dffr d9(.q(memReadEnable_out), .d(memReadEnable_in), .clk(clk), .rst(rst), .en(en));
+	dffr d10[1:0] (.q(PCCtr_out), .d(PCCtr_in), .clk(clk), .rst(rst), .en(en));
+	dffr d11 (.q(J_out), .d(J_in), .clk(clk), .rst(rst), .en(en));
+	dffr d12 (.q(siic_out), .d(siic_in), .clk(clk), .rst(rst), .en(en));
+	dffr d13 (.q(nop_out), .d(nop_in), .clk(clk), .rst(rst), .en(en));
+	dffr d14[15:0] (.q(I5_out), .d(I5_in), .clk(clk), .rst(rst), .en(en));
+	dffr d15[15:0] (.q(I8_out), .d(I8_in), .clk(clk), .rst(rst), .en(en));
+	dffr d16[15:0] (.q(D_out), .d(D_in), .clk(clk), .rst(rst), .en(en));
+	dffr d17[15:0] (.q(R1Data_out), .d(R1Data_in), .clk(clk), .rst(rst), .en(en));
+	dffr d18[15:0] (.q(R2Data_out), .d(R2Data_in), .clk(clk), .rst(rst), .en(en));
+	dffr d19[1:0] (.q(regWriteDataSel_out), .d(regWriteDataSel_in), .clk(clk), .rst(rst), .en(en));
+	dffr d20[1:0] (.q(compareSig_out), .d(compareSig_in), .clk(clk), .rst(rst), .en(en));
+	dffr d21[1:0] (.q(branchSig_out), .d(branchSig_in), .clk(clk), .rst(rst), .en(en));
+	dffr d22[2:0] (.q(regWriteNum_out), .d(regWriteNum_in), .clk(clk), .rst(rst), .en(en));
+	dffr d23 [15:0] (.q(newPC_out), .d(newPC_in), .clk(clk), .rst(rst), .en(en));
+	dffr d24 [15:0] (.q(PC2_out), .d(PC2_in), .clk(clk), .rst(rst), .en(en));
+	dffr d25 	  (.q(regWriteEnable_out), .d(regWriteEnable_in), .clk(clk), .rst(rst), .en(en));
 
 
-	dff d26[2:0] (.q(r1Num_out), .d(r1Num_in), .clk(clk), .rst(rst));
-	dff d27[2:0] (.q(r2Num_out), .d(r2Num_in), .clk(clk), .rst(rst));	
+
+	dffr d26[2:0] (.q(r1Num_out), .d(r1Num_in), .clk(clk), .rst(rst), .en(en));
+	dffr d27[2:0] (.q(r2Num_out), .d(r2Num_in), .clk(clk), .rst(rst), .en(en));	
         
 endmodule
