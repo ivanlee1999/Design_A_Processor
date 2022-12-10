@@ -134,7 +134,7 @@ module proc (/*AUTOARG*/
    //  $display("instr : %b", instr);
    //  $display("instr id : %b", instr_ID);
    //  $display("instr stall : %b", instrStall);
-   //  $display("stall: %h", stall);
+   //  $display("stall: %h, stallNext: %h", stall, stallNext);
    //  $display("branchStall: %h", branchStall);
    // //  $display("branch : %h", PCCtr);
    // //  $display("branchEX : %h", PCCtr_EX);
@@ -160,6 +160,8 @@ module proc (/*AUTOARG*/
    //  $display("ALUOut_EX: %b, AluOut_EM: %b, ALUout_MW: %b", ALUOut, ALUOut_EM, ALUOut_WB);
    //   $display("regWriteDataSel_EM: %b,  regWriteDataSel_MW: %b", regWriteDataSel_EM, regWriteDataSel_WB);
    //  $display("PCCTR: %b, PCCtr_EX: %b, PCCtr_EM: %b, PCCtr_MW: %b", PCCtr, PCCtr_EX, PCCtr_EM, PCCtr_MW);
+   //  $display("dataMemstall: %b", dataMemStall);
+   //  $display("decodewriteEnable: %b, memwriteEnable: %b", RWEN_WB, memory0.memWriteEnable & ~dataMemStall);
     
 
    //  $display("");
@@ -210,7 +212,7 @@ module proc (/*AUTOARG*/
       .forward_a(forward_a), .forward_b(forward_b));
 
 
-   assign stall = hazard_stall | branchStall |instrMemStall | dataMemStall;
+   assign stall = hazard_stall | branchStall | dataMemStall;
 
 
    wire [15:0] forwardR1Data, forwardR2Data;
@@ -230,9 +232,11 @@ module proc (/*AUTOARG*/
    wire stallNext;
    dff dffstall(stallNext, stall, clk, rst);
 
+   dff dmstall(dataMemStallnext, dataMemStall, clk,rst);
+
    wire [15:0] instrStall;
    // assign instrStall = (branchStall == 1'b1) ?   16'h0800 : (stallNext) ? 16'h0800 : instr_ID;
-   assign instrStall = (stallNext) ? 16'h0800 : instr_ID;
+   assign instrStall = dataMemStallnext? instr_ID :  (stallNext) ? 16'h0800 : instr_ID;
    // assign instrStall = instr_ID;
 
 

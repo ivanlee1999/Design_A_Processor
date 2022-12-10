@@ -44,12 +44,12 @@ module fetch (
    //module cla_16b(sum, c_out, a, b, c_in);
    dff_16b passPC(.q(newPC), .d(PC_temp), .clk(clk), .rst(rst));
    cla_16b pcPlus2(.sum(PC2), .c_out(), .a(newPC), .b(incr), .c_in(1'b0));
-   // memory2c fetchInstruct(.data_out(instrct), .data_in(16'h0000), 
-   //                      .addr(newPC), .enable(1'b1), .wr(1'b0), .createdump(halt), .clk(clk), .rst(rst) );
+   memory2c fetchInstruct(.data_out(instrct), .data_in(16'h0000), 
+                        .addr(newPC), .enable(1'b1), .wr(1'b0), .createdump(halt), .clk(clk), .rst(rst) );
 
    //module stallmem (DataOut, Done, Stall, CacheHit, err, Addr, DataIn, Rd, Wr, createdump, clk, rst);
-   stallmem insMem(.DataOut(instrct), .DataIn(16'b0), .Addr(newPC), .Rd(1'b1), .Wr(1'b0), .createdump(halt), 
-        .clk(clk), .rst(rst), .err(MemErr), .Done(), .Stall(instrMemStall), .CacheHit());
+   // stallmem insMem(.DataOut(instrct), .DataIn(16'b0), .Addr(newPC), .Rd(1'b1), .Wr(1'b0), .createdump(halt), 
+   //      .clk(clk), .rst(rst), .err(MemErr), .Done(), .Stall(instrMemStall), .CacheHit());
 
    
    assign PC_temp = ((PCCtr == 2'b01) | (J == 1'b1)) ? PCOut : PCin;
