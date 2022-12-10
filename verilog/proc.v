@@ -107,6 +107,8 @@ module proc (/*AUTOARG*/
 
    wire [2:0]   r1Num_EX, r2Num_EX;
 
+   wire instrMemStall;
+
 
    fetch fetch0(   
       .PCin(PCStall),
@@ -120,7 +122,8 @@ module proc (/*AUTOARG*/
       .PCCtr(PCCtr_EM),
       .branchStall(branchStall),
       .PCOut(PCOut_EM),
-      .J(J_EM)
+      .J(J_EM),
+      .instrMemStall(instrMemStall)
       );
 
 
@@ -205,7 +208,7 @@ module proc (/*AUTOARG*/
       .forward_a(forward_a), .forward_b(forward_b));
 
 
-   assign stall = hazard_stall | branchStall;
+   assign stall = hazard_stall | branchStall |instrMemStall;
 
 
    wire [15:0] forwardR1Data, forwardR2Data;

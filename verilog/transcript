@@ -1,5 +1,5 @@
-# vsim -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 21:21:12 on Dec 08,2022
+# vsim "+seed=45" -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
+# Start time: 10:29:03 on Dec 10,2022
 # //  ModelSim DE 10.7c Aug 17 2018Linux 5.15.0-56-generic
 # //
 # //  Copyright 1991-2018 Mentor Graphics Corporation
@@ -25,6 +25,7 @@
 # Loading __work.fullAdder_1b
 # Loading __work.nand2
 # Loading __work.nand3
+# Loading __work.stallmem
 # Loading __work.memory2c
 # Loading __work.IFID
 # Loading __work.hazard_stall
@@ -48,12 +49,16 @@
 # Loading __work.MEMWB
 # Loading __work.wb
 # Loading __work.bypass
+# ** Warning: (vsim-PLI-3691) Expected a system task, not a system function '$value$plusargs'.
+#    Time: 0 ns  Iteration: 0  Instance: /proc_hier_pbench/DUT/p0/fetch0/insMem File: stallmem.v Line: 86
 # log -howmany -rec /* 
-# 7795
+# 7805
 #  run -all
+# Using seed          45
+# rand_pat=802f6e00 10000000001011110110111000000000
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.ptrace for output
 # ** Note: $finish    : proc_hier_pbench.v(115)
-#    Time: 3905 ns  Iteration: 0  Instance: /proc_hier_pbench
-# End time: 21:21:12 on Dec 08,2022, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
+#    Time: 10205 ns  Iteration: 0  Instance: /proc_hier_pbench
+# End time: 10:29:03 on Dec 10,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
