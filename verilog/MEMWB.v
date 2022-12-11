@@ -36,7 +36,7 @@ module MEMWB (memoryOut, ALUOut, PC2, compareResult, regWriteDataSel, clk, rst,
    dffr compareResultdff (compareResult_MW, compareResult,en, clk, rst);
    dffr regWDSedff [1:0] (.q(regWriteDataSel_MW), .d(regWriteDataSel), .en(en),
    		      .clk(clk), .rst(rst));
-   dffr regWENabledff    (regWriteEnable_MW, (regWriteEnable & ~dataMemStall), en,clk, rst);
+   dffr regWENabledff    (regWriteEnable_MW, (regWriteEnable), en,clk, rst);
    dffr regWritedff [2:0]       (.q(regWriteNum_MW), .d(regWriteNum ), .en(en), .clk(clk), .rst(rst));
    dffr dffhaltdff (.q(halt_MW), .d(halt), .en(en), .clk(clk), .rst(rst));
    dffr passPCOutdff [15:0] (.q(PCOut_MW), .d(PCOut),.en(en), .clk(clk), .rst(rst)); 

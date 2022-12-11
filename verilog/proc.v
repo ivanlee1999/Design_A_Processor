@@ -156,8 +156,9 @@ module proc (/*AUTOARG*/
    //  $display("original data 2 : %b", R2Data_EX);
    //  $display("forward data 1 : %b", forwardR1Data);
    //  $display("forward data 2 : %b", forwardR2Data);
+   //  $display("regwriteEnableEM : %b, regwriteEnableWB : %b", RWEN_EM, RWEN_WB);
    //  $display("jump: %b, branch: %b", hazard0.jump, hazard0.branch);
-   //  $display("ALUOut_EX: %b, AluOut_EM: %b, ALUout_MW: %b", ALUOut, ALUOut_EM, ALUOut_WB);
+   //  $display("ALUOut_EX: %h, AluOut_EM: %h, ALUout_MW: %h", ALUOut, ALUOut_EM, ALUOut_WB);
    //   $display("regWriteDataSel_EM: %b,  regWriteDataSel_MW: %b", regWriteDataSel_EM, regWriteDataSel_WB);
    //  $display("PCCTR: %b, PCCtr_EX: %b, PCCtr_EM: %b, PCCtr_MW: %b", PCCtr, PCCtr_EX, PCCtr_EM, PCCtr_MW);
    //  $display("dataMemstall: %b", dataMemStall);
@@ -307,9 +308,15 @@ module proc (/*AUTOARG*/
 
       
 
+   // wire [15:0] forwardR1DataNext, forwardR2DataNext;
+   // wire [15:0] forwardR1DataReg, forwardR2DataReg;
 
 
+   // dffr fdata1 [15:0] (.q(forwardR1DataNext), .d(forwardR1Data), .clk(clk), .rst(rst), .en(~dataMemStall));
+   // dffr fdata2 [15:0] (.q(forwardR2DataNext), .d(forwardR2Data), .clk(clk), .rst(rst), .en(~dataMemStall));
 
+   // assign forwardR1DataReg = dataMemStall ? forwardR1DataNext : forwardR1Data;
+   // assign forwardR2DataReg = dataMemStall ? forwardR2DataNext : forwardR2Data;
 
 
 
@@ -392,7 +399,7 @@ module proc (/*AUTOARG*/
       .PCOut(PCOut_EM),
       .PCCtr(PCCtr_EM),
       .J(J_EM),
-      .en(1'b1),
+      .en(~dataMemStall),
       .dataMemStall(dataMemStall),
       //output
       .memoryOut_MW(memoryOut_WB),

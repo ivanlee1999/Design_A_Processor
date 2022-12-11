@@ -1,8 +1,6 @@
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/rand_complex/t_1_all.asm SUCCESS CPI:1.7 CYCLES:1142 ICOUNT:668 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/rand_complex/t_2_all.asm SUCCESS CPI:1.7 CYCLES:902 ICOUNT:518 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/rand_complex/t_3_all.asm FAILED
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/rand_complex/t_4_all.asm SUCCESS CPI:1.9 CYCLES:1047 ICOUNT:561 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/rand_complex/t_5_all.asm SUCCESS CPI:1.8 CYCLES:963 ICOUNT:538 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/rand_complex/t_6_all.asm SUCCESS CPI:1.7 CYCLES:1126 ICOUNT:658 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/rand_complex/t_7_all.asm SUCCESS CPI:2.0 CYCLES:907 ICOUNT:465 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/rand_complex/t_8_all.asm SUCCESS CPI:1.8 CYCLES:919 ICOUNT:498 IHITRATE: 0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/branchTest.asm SUCCESS CPI:4.3 CYCLES:91 ICOUNT:21 IHITRATE: 0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/easyTest.asm SUCCESS CPI:4.5 CYCLES:183 ICOUNT:41 IHITRATE: 0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/finalTest2.asm SUCCESS CPI:3.0 CYCLES:1392 ICOUNT:457 IHITRATE: 0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/firstTest.asm SUCCESS CPI:1.2 CYCLES:51 ICOUNT:41 IHITRATE: 0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/loadStoreTest.asm SUCCESS CPI:2.0 CYCLES:69 ICOUNT:35 IHITRATE: 0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/shiftTest.asm SUCCESS CPI:1.1 CYCLES:105 ICOUNT:98 IHITRATE: 0 DHITRATE: 0

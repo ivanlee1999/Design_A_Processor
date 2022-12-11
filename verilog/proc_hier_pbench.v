@@ -135,7 +135,7 @@ module proc_hier_pbench();
    assign PC = DUT.p0.fetch0.newPC;
    assign Inst = DUT.p0.fetch0.instrct;
    
-   assign RegWrite = DUT.p0.decode0.regFile0.writeEn;
+   assign RegWrite = DUT.p0.decode0.regFile0.writeEn &  ~DUT.p0.dataMemStallnext;
    // Is register being written, one bit signal (1 means yes, 0 means no)
    
    assign WriteRegister = DUT.p0.decode0.regFile0.writeRegSel;
