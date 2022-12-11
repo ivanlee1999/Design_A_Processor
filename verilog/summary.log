@@ -1,6 +1,8 @@
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/branchTest.asm SUCCESS CPI:4.3 CYCLES:91 ICOUNT:21 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/easyTest.asm SUCCESS CPI:4.5 CYCLES:183 ICOUNT:41 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/finalTest2.asm SUCCESS CPI:3.0 CYCLES:1392 ICOUNT:457 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/firstTest.asm SUCCESS CPI:1.2 CYCLES:51 ICOUNT:41 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/loadStoreTest.asm SUCCESS CPI:2.0 CYCLES:69 ICOUNT:35 IHITRATE: 0 DHITRATE: 0
-/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo1/shiftTest.asm SUCCESS CPI:1.1 CYCLES:105 ICOUNT:98 IHITRATE: 0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo2/alignTest.asm SUCCESS CPI:3.6 CYCLES:25 ICOUNT:7 IHITRATE: 0.0 DHITRATE: 0.0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo2/perf-test-dep-all.asm SUCCESS CPI:3.0 CYCLES:27 ICOUNT:9 IHITRATE: 0.0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo2/perf-test-dep-ld.asm SUCCESS CPI:3.6 CYCLES:29 ICOUNT:8 IHITRATE: 0.0 DHITRATE: 0.0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo2/perf-test-dep-ldst.asm SUCCESS CPI:4.5 CYCLES:49 ICOUNT:11 IHITRATE: 0.0 DHITRATE: 0.0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo2/perf-test-dep-waw.asm SUCCESS CPI:3.0 CYCLES:27 ICOUNT:9 IHITRATE: 0.0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo2/perf-test-dep-zero.asm SUCCESS CPI:11.6 CYCLES:58 ICOUNT:5 IHITRATE: 0.0 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo2/pipeTest.asm RELAX-PASS
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/complex_demo2/stallTest.asm SUCCESS CPI:5.8 CYCLES:440 ICOUNT:76 IHITRATE: 0.0 DHITRATE: 0.0

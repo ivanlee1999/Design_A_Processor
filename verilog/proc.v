@@ -110,6 +110,9 @@ module proc (/*AUTOARG*/
    wire instrMemStall;
    wire dataMemStall;
 
+   wire stallNext;
+   wire instrMemStallNext;
+
 
    fetch fetch0(   
       .PCin(PCStall),
@@ -135,33 +138,30 @@ module proc (/*AUTOARG*/
    //  $display("instr id : %b", instr_ID);
    //  $display("instr stall : %b", instrStall);
    //  $display("stall: %h, stallNext: %h", stall, stallNext);
-   //  $display("branchStall: %h", branchStall);
+   // //  $display("branchStall: %h", branchStall);
    // //  $display("branch : %h", PCCtr);
    // //  $display("branchEX : %h", PCCtr_EX);
    // //  $display("branchEM : %h", PCCtr_EM);
    // //  $display("branchWB : %h", PCCtr_MW); 
    // //  $display("fetch0 : newPC: %d, PC2: %d", newPC, PC2);
-   // //  $display("PCStall: %d", PCStall);
-   // //  $display("PCOut : %d", PCOut); 
+   //  $display("PCStall: %d", PCStall);
+   //  $display("PCOut : %d", PCOut); 
    // //  $display("D : %b", D_EX); 
-   // //  $display("halt : %b", halt_MW); 
-   // //  $display("PC_temp : %d", fetch0.PC_temp); 
+   //  $display("halt : %b", halt_MW); 
+   //  $display("PC_temp : %d", fetch0.PC_temp); 
    // //  $display("R2Data : %h", R2Data_EM);
    //  $display("regwriteNum: ID : %h,  EX : %h, EM : %h, WB : %h", regWriteNum, regWriteNum_EX, regWriteNum_EM, regWriteNum_WB);
    //  $display("R1Num_EX : %h, R2Num_EX : %h", r1Num_EX, r2Num_EX);
    //  $display("memWriteEnable_EM: %h", memWriteEnable_EM);
-   //  $display("forward signal 1 : %b", forward_a);
-   //  $display("forward signal 2 : %b", forward_b);
-   //  $display("original data 1 : %b", R1Data_EX);
-   //  $display("original data 2 : %b", R2Data_EX);
-   //  $display("forward data 1 : %b", forwardR1Data);
-   //  $display("forward data 2 : %b", forwardR2Data);
+   //  $display("forward signal 1 : %b, forward signal 2 : %b", forward_a, forward_b);
+   //  $display("original data 1 : %b, original data 2 : %b", R1Data_EX, R2Data_EX);
+   //  $display("forward data 1 : %b, forward data 2 : %b", forwardR1Data, forwardR2Data);
    //  $display("regwriteEnableEM : %b, regwriteEnableWB : %b", RWEN_EM, RWEN_WB);
    //  $display("jump: %b, branch: %b", hazard0.jump, hazard0.branch);
    //  $display("ALUOut_EX: %h, AluOut_EM: %h, ALUout_MW: %h", ALUOut, ALUOut_EM, ALUOut_WB);
    //   $display("regWriteDataSel_EM: %b,  regWriteDataSel_MW: %b", regWriteDataSel_EM, regWriteDataSel_WB);
    //  $display("PCCTR: %b, PCCtr_EX: %b, PCCtr_EM: %b, PCCtr_MW: %b", PCCtr, PCCtr_EX, PCCtr_EM, PCCtr_MW);
-   //  $display("dataMemstall: %b", dataMemStall);
+   //  $display("instrMemStall : %b,  dataMemstall: %b", instrMemStall,dataMemStall);
    //  $display("decodewriteEnable: %b, memwriteEnable: %b", RWEN_WB, memory0.memWriteEnable & ~dataMemStall);
     
 
@@ -213,7 +213,7 @@ module proc (/*AUTOARG*/
       .forward_a(forward_a), .forward_b(forward_b));
 
 
-   assign stall = hazard_stall | branchStall | dataMemStall;
+   assign stall = hazard_stall | branchStall | dataMemStall | instrMemStall;
 
 
    wire [15:0] forwardR1Data, forwardR2Data;
@@ -230,10 +230,12 @@ module proc (/*AUTOARG*/
 
 
    
-   wire stallNext;
    dff dffstall(stallNext, stall, clk, rst);
 
    dff dmstall(dataMemStallnext, dataMemStall, clk,rst);
+
+   
+   dff dmstall2(instrMemStallNext, instrMemStall, clk,rst);
 
    wire [15:0] instrStall;
    // assign instrStall = (branchStall == 1'b1) ?   16'h0800 : (stallNext) ? 16'h0800 : instr_ID;
@@ -269,7 +271,7 @@ module proc (/*AUTOARG*/
 
 
    IDEX idex0 (
-      .halt_in(halt), .halt_out(halt_EX),
+      .halt_in(halt & ~instrMemStallNext), .halt_out(halt_EX),
       .inv1_in(inv1), .inv2_in(inv2), .cin_in(cin),
       .inv1_out(inv1_EX), .inv2_out(inv2_EX), .cin_out(cin_EX),
       .ALU1Sel_in(ALU1Sel),
@@ -379,7 +381,7 @@ module proc (/*AUTOARG*/
 
    memory memory0(
       .memWriteEnable(memWriteEnable_EM), .memReadEnable(memReadEnable_EM),
-      .siic(siic_EM), .nop(nop_EM), .clk(clk), .rst(rst), .halt(halt_EM), 
+      .siic(siic_EM), .nop(nop_EM), .clk(clk), .rst(rst), .halt(halt_EM ), 
       .R2Data(R2Data_EM), .ALUOut(ALUOut_EM),
       .memoryOutData(memoryOut),
       .dataMemStall(dataMemStall)
