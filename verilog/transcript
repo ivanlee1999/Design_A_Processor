@@ -1,6 +1,6 @@
-# vsim "+seed=45" -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
-# Start time: 20:11:51 on Dec 10,2022
-# //  ModelSim DE 10.7c Aug 17 2018Linux 5.15.0-56-generic
+# vsim -c proc_hier_pbench -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
+# Start time: 11:54:48 on Dec 13,2022
+# //  ModelSim DE 10.7c Aug 17 2018Linux 5.15.0-48-generic
 # //
 # //  Copyright 1991-2018 Mentor Graphics Corporation
 # //  All Rights Reserved.
@@ -25,18 +25,24 @@
 # Loading __work.fullAdder_1b
 # Loading __work.nand2
 # Loading __work.nand3
-# Loading __work.memory2c
+# Loading __work.mem_system
+# Loading __work.cache
+# Loading __work.memc
+# Loading __work.memv
+# Loading __work.four_bank_mem
+# Loading __work.final_memory
+# Loading __work.cache_controller
 # Loading __work.IFID
 # Loading __work.hazard_stall
 # Loading __work.hazard_forward
 # Loading __work.forward_alu
+# Loading __work.dffr
 # Loading __work.decode
 # Loading __work.control
 # Loading __work.mux4_1_3b
 # Loading __work.mux4_1
 # Loading __work.regFile_bypass
 # Loading __work.IDEX
-# Loading __work.dffr
 # Loading __work.execute
 # Loading __work.alu
 # Loading __work.inverse
@@ -46,20 +52,15 @@
 # Loading __work.mux8_1
 # Loading __work.EXMEM
 # Loading __work.memory
-# Loading __work.stallmem
 # Loading __work.MEMWB
 # Loading __work.wb
 # Loading __work.bypass
-# ** Warning: (vsim-PLI-3691) Expected a system task, not a system function '$value$plusargs'.
-#    Time: 0 ns  Iteration: 0  Instance: /proc_hier_pbench/DUT/p0/memory0/mem File: stallmem.v Line: 86
 # log -howmany -rec /* 
-# 9857
+# 12952
 #  run -all
-# Using seed          45
-# rand_pat=802f6e00 10000000001011110110111000000000
 # Hello world...simulation starting
 # See verilogsim.log and verilogsim.ptrace for output
 # ** Note: $finish    : proc_hier_pbench.v(115)
-#    Time: 139105 ns  Iteration: 0  Instance: /proc_hier_pbench
-# End time: 20:11:51 on Dec 10,2022, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 1
+#    Time: 3105 ns  Iteration: 0  Instance: /proc_hier_pbench
+# End time: 11:54:49 on Dec 13,2022, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
