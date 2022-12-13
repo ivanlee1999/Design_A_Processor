@@ -33,22 +33,22 @@ module memory (
    // memory2c m(.data_out(memoryOutData), .data_in(R2Data), .addr(ALUOut), .enable(memEnable), .wr(memWriteEnable), .createdump(halt), .clk(clk), .rst(rst));
 
 
-    stallmem mem(.DataOut(memoryOutData), .DataIn(R2Data), .Addr(ALUOut), .Rd(memReadEnable), .Wr(memWriteEnable), .createdump(halt), 
+    //stallmem mem(.DataOut(memoryOutData), .DataIn(R2Data), .Addr(ALUOut), .Rd(memReadEnable), .Wr(memWriteEnable), .createdump(halt), 
+    //    .clk(clk), .rst(rst), .err(), .Done(), .Stall(dataMemStall), .CacheHit());
+
+
+    mem_system mem(.DataOut(memoryOutData), .DataIn(R2Data), .Addr(ALUOut), .Rd(memReadEnable), .Wr(memWriteEnable), .createdump(halt), 
         .clk(clk), .rst(rst), .err(), .Done(), .Stall(dataMemStall), .CacheHit());
 
 
 
-
-
-
-
    // $display("test");
-   // always@(clk) begin
+   //always@(clk) begin
    // if(memWriteEnable == 1'b1) begin
-   //    $display("memory address %h  memoryWriteData : %h.",ALUOut, R2Data);
-   //    $display("memoryOutData : %h, memReadEnable: %h, memWriteEnable: %h, halt: %h, clk: %h, rst: %h, memEnable: %h",
+   //$display("memoryOutData: %h",memoryOutData);
+   //$display("memoryOutData : %h, memReadEnable: %h, memWriteEnable: %h, halt: %h, clk: %h, rst: %h, memEnable: %h",
    //          memoryOutData, memReadEnable, memWriteEnable, halt, clk, rst, memEnable);
-   // end
+   //end
    // end
 
 endmodule
