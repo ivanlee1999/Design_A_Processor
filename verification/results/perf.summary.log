@@ -1,0 +1,7 @@
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/perf/Ackermann.asm FAILED
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/perf/Primes.asm SUCCESS CPI:4.6 CYCLES:3117 ICOUNT:684 IHITRATE: 99.6 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/perf/branchPrediction.asm SUCCESS CPI:4.1 CYCLES:314 ICOUNT:77 IHITRATE: 98.2 DHITRATE: 0
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/perf/bubbleSort.asm SUCCESS CPI:2.9 CYCLES:2443 ICOUNT:840 IHITRATE: 99.8 DHITRATE: 95.7
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/perf/cache_thrash.asm SUCCESS CPI:3.0 CYCLES:11035 ICOUNT:3703 IHITRATE: 100.0 DHITRATE: 66.6
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/perf/cache_thrash2.asm RELAX-PASS
+/u/s/i/sinclair/courses/cs552/spring2022/handouts/testprograms/public/perf/fib.asm SUCCESS CPI:2.7 CYCLES:572 ICOUNT:208 IHITRATE: 98.5 DHITRATE: 84.5
